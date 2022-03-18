@@ -26,6 +26,17 @@ docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db mongo
 ItemsController -> IItemsRepository -> ItemsRepository -> IMongoDatabase 
 -> MongoDatabase -> MongoClient (connectionstring)
 
+# Postman
+    Workspaces, collections, variable
+# Generize the repository
+    DRY
+    Refactory
+    Generic Repository
+# NuGet package
+   nuget locals all -clear
+   
+# Docker compose
+
 
 # Git
 echo "# Game.Zone" >> README.md

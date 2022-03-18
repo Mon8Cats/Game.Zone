@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Game.Catalog.Service.Settings
+namespace Game.Common.Settings
 {
     public class MongoDbSettings
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Game.Catalog.Service.Dtos;
 using Game.Catalog.Service.Entities;
-using Game.Catalog.Service.Repositories;
+using Game.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Game.Catalog.Service.Controllers
@@ -21,9 +21,9 @@ namespace Game.Catalog.Service.Controllers
             new ItemDto(Guid.NewGuid(), "Bronze sword", "Deals a small amount of damage", 20, DateTimeOffset.UtcNow),
         };
         */
-        private readonly IItemsRepository itemsRepository;
+        private readonly IRepository<Item> itemsRepository;
 
-        public ItemsController(IItemsRepository itemsRepository)
+        public ItemsController(IRepository<Item> itemsRepository)
         {
             this.itemsRepository = itemsRepository;
         }
