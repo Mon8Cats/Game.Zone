@@ -37,6 +37,11 @@ ItemsController -> IItemsRepository -> ItemsRepository -> IMongoDatabase
    
 # Docker compose
 
+# Intelli sence
+    ⌃Space
+
+# Postman
+    "userId": "{{$guid}}",
 
 # Git
 echo "# Game.Zone" >> README.md
@@ -46,3 +51,9 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/Mon8Cats/Game.Zone.git
 git push -u origin main
+
+
+# partial failure
+# setting timeouts
+# retries with exponential backoff
+# circuit break pattern
