@@ -3,6 +3,29 @@
     Dtos
     Controllers
 
+# MongoDb
+    Entity
+    mongoUrl
+    CollectionName
+    IMongoCollection<T>
+    FilterDefinitionBuilder<T> 
+    MongoClient(monoUrl) -> IMongoDatabase -> IMongoCollection
+    CRUD operations
+
+    BsonSerializer
+
+# Controller
+IMongoCollection<T> -> Controller -> Actions -> Use CRUD operations of IMongoCollection
+
+# Docker
+docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db mongo
+
+# BsonSerializer
+
+# Dependency Injection
+ItemsController -> IItemsRepository -> ItemsRepository -> IMongoDatabase 
+-> MongoDatabase -> MongoClient (connectionstring)
+
 
 # Git
 echo "# Game.Zone" >> README.md
