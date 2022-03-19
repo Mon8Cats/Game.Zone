@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Game.Common" Version="1.0.0" />
+    <PackageReference Include="Game.Common" Version="1.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Game.Catalog.Contracts\Game.Catalog.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

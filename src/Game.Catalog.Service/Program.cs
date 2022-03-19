@@ -1,6 +1,10 @@
 using Game.Catalog.Service.Entities;
+using Game.Catalog.Service.Settings;
+using Game.Common.MassTransit;
 using Game.Common.MongoDB;
 using Game.Common.Settings;
+using MassTransit;
+using MassTransit.Definition;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +13,8 @@ var serviceSettings = builder.Configuration.GetSection(nameof(ServiceSettings)).
 
 builder.Services
     .AddMongo()
-    .AddMongoRepository<Item>("items");
+    .AddMongoRepository<Item>("items")
+    .AddMassTransitWithRabbitMq();
 
 builder.Services.AddControllers(options =>
 {
