@@ -9,6 +9,8 @@ using MassTransit.Definition;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+const string AllowedOriginSetting = "AllowedOrigin";
+
 var serviceSettings = builder.Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
 
 builder.Services
@@ -31,6 +33,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseCors(policyBuilder => 
+    {
+        policyBuilder.WithOrigins(builder.Configuration[AllowedOriginSetting])
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
 }
 
 app.UseHttpsRedirection();
