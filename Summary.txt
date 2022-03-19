@@ -82,3 +82,8 @@ services:
 volumes:
   mongodbdata: 
   rabbitmqdata:
+
+
+  # Identity
+  https://localhost:7003/Identity/Account/Register
+  https://localhost:7003/Identity/Account/Login
