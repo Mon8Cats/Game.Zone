@@ -1,3 +1,4 @@
+using Game.Common.Identity;
 using Game.Common.MassTransit;
 using Game.Common.MongoDB;
 using Game.Inventory.Service.Clients;
@@ -14,7 +15,8 @@ builder.Services
     .AddMongo()
     .AddMongoRepository<InventoryItem>("inventoryItems")
     .AddMongoRepository<CatalogItem>("catalogItems")
-    .AddMassTransitWithRabbitMq();
+    .AddMassTransitWithRabbitMq()
+    .AddJwtBearerAuthentication();
 
 AddCatalogClient(builder);
 
@@ -42,6 +44,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

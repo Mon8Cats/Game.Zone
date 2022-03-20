@@ -4,6 +4,7 @@
 
 using Game.Common.Settings;
 using Game.Identity.Service.Entities;
+using Game.Identity.Service.Settings;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 var serviceSettings = builder.Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
 var mongoDbSettings = builder.Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+var identityServerSettings = builder.Configuration.GetSection(nameof(IdentityServerSettings)).Get<IdentityServerSettings>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>()
     .AddRoles<ApplicationRole>()
@@ -23,6 +25,19 @@ builder.Services.AddDefaultIdentity<ApplicationUser>()
         serviceSettings.ServiceName
     );
 
+builder.Services.AddIdentityServer(options => {
+        options.Events.RaiseSuccessEvents = true;
+        options.Events.RaiseFailureEvents = true;
+        options.Events.RaiseErrorEvents = true;
+    })
+    .AddAspNetIdentity<ApplicationUser>()
+    .AddInMemoryApiScopes(identityServerSettings.ApiScopes)
+    .AddInMemoryApiResources(identityServerSettings.ApiResources)
+    .AddInMemoryClients(identityServerSettings.Clients)
+    .AddInMemoryIdentityResources(identityServerSettings.IdentityResources)
+    .AddDeveloperSigningCredential();
+
+builder.Services.AddLocalApiAuthentication();
 
 
 builder.Services.AddControllers();
@@ -42,6 +57,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
 

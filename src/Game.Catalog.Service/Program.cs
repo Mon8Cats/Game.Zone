@@ -1,10 +1,8 @@
 using Game.Catalog.Service.Entities;
-using Game.Catalog.Service.Settings;
+using Game.Common.Identity;
 using Game.Common.MassTransit;
 using Game.Common.MongoDB;
 using Game.Common.Settings;
-using MassTransit;
-using MassTransit.Definition;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +14,16 @@ var serviceSettings = builder.Configuration.GetSection(nameof(ServiceSettings)).
 builder.Services
     .AddMongo()
     .AddMongoRepository<Item>("items")
-    .AddMassTransitWithRabbitMq();
+    .AddMassTransitWithRabbitMq()
+    .AddJwtBearerAuthentication();
+
+/*
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => {
+        options.Authority = "https://localhost:7003";
+        options.Audience = serviceSettings.ServiceName;
+    });
+*/
 
 builder.Services.AddControllers(options =>
 {
@@ -44,6 +51,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

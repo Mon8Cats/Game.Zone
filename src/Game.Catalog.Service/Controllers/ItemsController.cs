@@ -7,12 +7,14 @@ using Game.Catalog.Service.Dtos;
 using Game.Catalog.Service.Entities;
 using Game.Common;
 using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Game.Catalog.Service.Controllers
 {
     [ApiController]
     [Route("items")]
+    [Authorize]
     public class ItemsController : ControllerBase
     {
         /*

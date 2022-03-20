@@ -86,4 +86,8 @@ volumes:
 
   # Identity
   https://localhost:7003/Identity/Account/Register
-  https://localhost:7003/Identity/Account/Login
+  https://localhost:7003/Identity/Account/Login 
+
+  # package
+
+  dotnet pack -p:PackageVersion=1.0.1 -o ~/packages/

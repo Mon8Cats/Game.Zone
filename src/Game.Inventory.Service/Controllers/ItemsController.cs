@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Game.Common;
-using Game.Inventory.Service.Clients;
 using Game.Inventory.Service.Dtos;
 using Game.Inventory.Service.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Game.Inventory.Service.Controllers
 {
     [ApiController]
     [Route("items")]
+    [Authorize]
     public class ItemsController : ControllerBase
     {
         private readonly IRepository<InventoryItem> inventoryItemsRepository;
