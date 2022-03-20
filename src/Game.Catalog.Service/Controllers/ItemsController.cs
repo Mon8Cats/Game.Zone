@@ -14,7 +14,7 @@ namespace Game.Catalog.Service.Controllers
 {
     [ApiController]
     [Route("items")]
-    [Authorize]
+    //[Authorize(Roles = AdminRole)]
     public class ItemsController : ControllerBase
     {
         /*
@@ -25,6 +25,8 @@ namespace Game.Catalog.Service.Controllers
             new ItemDto(Guid.NewGuid(), "Bronze sword", "Deals a small amount of damage", 20, DateTimeOffset.UtcNow),
         };
         */
+
+        private const string AdminRole = "Admin";
         private readonly IRepository<Item> itemsRepository;
         //private static int requestCounter = 0;
         private readonly IPublishEndpoint publishEndpoint;
@@ -37,6 +39,7 @@ namespace Game.Catalog.Service.Controllers
 
         // GET /items
         [HttpGet]
+        [Authorize(Policies.Read)]
         public async Task<ActionResult<IEnumerable<ItemDto>>> GetAsync()
         {
             /*
@@ -67,6 +70,7 @@ namespace Game.Catalog.Service.Controllers
 
         // GET /items/{id}
         [HttpGet("{id}")]
+        [Authorize(Policies.Read)]
         public async Task<ActionResult<ItemDto>> GetByIdAsync(Guid id)
         {
             var item = await itemsRepository.GetAsync(id);
@@ -80,6 +84,7 @@ namespace Game.Catalog.Service.Controllers
 
         // POST /items
         [HttpPost]
+        [Authorize(Policies.Write)]
         public async Task<ActionResult<ItemDto>> PostAsync(CreateItemDto createItemDto)
         {
             var item = new Item{                
@@ -98,6 +103,7 @@ namespace Game.Catalog.Service.Controllers
 
         // Put /items/{id}
         [HttpPut("{id}")]
+        [Authorize(Policies.Write)]
         public async Task<IActionResult> PutAsync(Guid id, UpdateItemDto updateItemDto)
         {
             var existingItem =  await itemsRepository.GetAsync(id);
@@ -121,6 +127,7 @@ namespace Game.Catalog.Service.Controllers
 
         // DELETE /items/{id}
         [HttpDelete("{id}")]
+        [Authorize(Policies.Write)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
 

@@ -1,3 +1,4 @@
+using Game.Catalog.Service;
 using Game.Catalog.Service.Entities;
 using Game.Common.Identity;
 using Game.Common.MassTransit;
@@ -24,6 +25,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.Audience = serviceSettings.ServiceName;
     });
 */
+builder.Services.AddAuthorization(options => 
+{
+    options.AddPolicy(Policies.Read, policy => 
+    {
+        policy.RequireRole("Admin");
+        policy.RequireClaim("scope", "catalog.readaccess", "catalog.fulllaccess");
+    });
+
+    options.AddPolicy(Policies.Write, policy => 
+    {
+        policy.RequireRole("Admin");
+        policy.RequireClaim("scope", "catalog.writeaccess", "catalog.fulllaccess");
+    });
+
+});
+
+
 
 builder.Services.AddControllers(options =>
 {

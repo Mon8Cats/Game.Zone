@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Game.Common;
 using Game.Inventory.Service.Dtos;
 using Game.Inventory.Service.Entities;
@@ -8,9 +9,10 @@ namespace Game.Inventory.Service.Controllers
 {
     [ApiController]
     [Route("items")]
-    [Authorize]
+    //[Authorize]
     public class ItemsController : ControllerBase
     {
+        private const string AdminRole = "Admin";
         private readonly IRepository<InventoryItem> inventoryItemsRepository;
         //private readonly CatalogClient catalogClient;
         private readonly IRepository<CatalogItem> catalogItemsRepository;
@@ -30,6 +32,16 @@ namespace Game.Inventory.Service.Controllers
                 return BadRequest();
             }
 
+            var currentUserId = User.FindFirstValue("sub"); // sub Claim
+            if (Guid.Parse(currentUserId) != userId)
+            {
+                if (!User.IsInRole(AdminRole))
+                {
+                    return Unauthorized();
+                }
+            }
+
+
             //var items = (await itemsRepository.GetAllAsync(item => item.UserId == userId))
             //            .Select(item => item.AsDto());
 
@@ -48,6 +60,7 @@ namespace Game.Inventory.Service.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = AdminRole)]
         public async Task<ActionResult> PostAsync(GrantItemDto grantItemDto)
         {
             var inventoryItem = await inventoryItemsRepository.GetAsync(item => item.UserId == grantItemDto.UserId && item.CatalogItemId == grantItemDto.CatalogItemId);

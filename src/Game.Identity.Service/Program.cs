@@ -4,7 +4,9 @@
 
 using Game.Common.Settings;
 using Game.Identity.Service.Entities;
+using Game.Identity.Service.HostedServices;
 using Game.Identity.Service.Settings;
+using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
@@ -17,7 +19,8 @@ var serviceSettings = builder.Configuration.GetSection(nameof(ServiceSettings)).
 var mongoDbSettings = builder.Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
 var identityServerSettings = builder.Configuration.GetSection(nameof(IdentityServerSettings)).Get<IdentityServerSettings>();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>()
+builder.Services.Configure<IdentitySettings>(builder.Configuration.GetSection(nameof(IdentitySettings)))
+    .AddDefaultIdentity<ApplicationUser>()
     .AddRoles<ApplicationRole>()
     .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>
     (
@@ -39,8 +42,9 @@ builder.Services.AddIdentityServer(options => {
 
 builder.Services.AddLocalApiAuthentication();
 
-
 builder.Services.AddControllers();
+
+builder.Services.AddHostedService<IdentitySeedHostedService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
