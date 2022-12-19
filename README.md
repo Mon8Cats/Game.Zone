@@ -1,4 +1,5 @@
 # Game.Zone
+- An application to create items and purchase items and put into inventories.
 - Admin can create items using Catalog Service.
 - Users can add items into there inventories using Inventory Service.
 - Ansyncronsous communcation from Catalog Service to Inventory Service using RabbitMQ and MassTransit.
