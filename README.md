@@ -1,6 +1,10 @@
 # Game.Zone
-Admin can create items using Catalog Service.
-Users can add items into there inventories using Inventory Service
+- Admin can create items using Catalog Service.
+- Users can add items into there inventories using Inventory Service.
+- Ansyncronsous communcation from Catalog Service to Inventory Service using RabbitMQ and MassTransit.
+- Users are mananged using Itentity Service.
+- Resources are secured using Itentity Service.
+- JWT tokens are used.
 
 ## Microservices
 1. Game.Catalog.Service - web api
