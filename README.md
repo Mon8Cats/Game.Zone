@@ -1,4 +1,6 @@
 # Game.Zone
+Admin can create items using Catalog Service.
+Users can add items into there inventories using Inventory Service
 
 ## Microservices
 1. Game.Catalog.Service - web api
