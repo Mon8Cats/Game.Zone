@@ -18,3 +18,5 @@
 2. Game.Common - common interfaces for entity, repository and setting for MongoDb, MassTransit
 3. Game.Frontend - React Frontend 
 4. Game.Infra - docker compose file for MongoDB and RabbitMQ
+
+Test
